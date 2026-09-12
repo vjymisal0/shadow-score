@@ -1,0 +1,64 @@
+{
+  "name": "shadow-score",
+  "version": "1.0.0",
+  "description": "Detect and quantify harsh directional shadows in documents and photos using Otsu bimodal luminance segmentation and spatial illumination gradient analysis with Sharp.",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit",
+    "prepublishOnly": "npm run build && npm test"
+  },
+  "keywords": [
+    "shadow",
+    "shadow-detection",
+    "shadow-score",
+    "image-quality",
+    "document-scanner",
+    "kyc",
+    "ocr-preprocessing",
+    "sharp",
+    "blur-score",
+    "exposure-score",
+    "glare-score"
+  ],
+  "author": "Vijay Misal <misalvijay153@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vjymisal0/shadow-score.git"
+  },
+  "bugs": {
+    "url": "https://github.com/vjymisal0/shadow-score/issues"
+  },
+  "homepage": "https://github.com/vjymisal0/shadow-score#readme",
+  "license": "MIT",
+  "dependencies": {
+    "sharp": "^0.33.5"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "tsup": "^8.3.5",
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.8"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
