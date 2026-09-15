@@ -1,6 +1,7 @@
 # shadow-score 🌓
 
 [![npm version](https://img.shields.io/npm/v/shadow-score.svg?style=flat-square)](https://www.npmjs.com/package/shadow-score)
+[![CI](https://github.com/vjymisal0/shadow-score/actions/workflows/ci.yml/badge.svg)](https://github.com/vjymisal0/shadow-score/actions/workflows/ci.yml)
 [![license](https://img.shields.io/npm/l/shadow-score.svg?style=flat-square)](https://github.com/vjymisal0/shadow-score/blob/main/LICENSE)
 [![TypeScript](https://img.shields.io/badge/TypeScript-Ready-blue.svg?style=flat-square)](https://www.typescriptlang.org)
 [![Build & Tests](https://img.shields.io/badge/tests-passing-brightgreen.svg?style=flat-square)](https://github.com/vjymisal0/shadow-score)
