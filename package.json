@@ -1,6 +1,6 @@
 {
   "name": "shadow-score",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Detect and quantify harsh directional shadows in documents and photos using Otsu bimodal luminance segmentation and spatial illumination gradient analysis with Sharp.",
   "type": "module",
   "main": "./dist/index.cjs",
@@ -51,7 +51,7 @@
   "homepage": "https://github.com/vjymisal0/shadow-score#readme",
   "license": "MIT",
   "dependencies": {
-    "sharp": "^0.33.5"
+    "sharp": "0.35.4"
   },
   "devDependencies": {
     "@types/node": "^22.10.2",
