@@ -332,3 +332,7 @@ npm run typecheck
 ## 📄 License
 
 [MIT](LICENSE) © [Vijay Misal](mailto:misalvijay153@gmail.com)
+
+## Limitations
+
+Shadow scores are heuristic image-analysis signals and should be calibrated against your own camera, lighting, and document data.
