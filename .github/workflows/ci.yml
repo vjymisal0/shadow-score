@@ -11,22 +11,58 @@ permissions:
 jobs:
   validate:
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        node-version: [22, 24]
     steps:
       - name: Checkout
         uses: actions/checkout@v5
       - name: Setup Node.js
         uses: actions/setup-node@v5
         with:
-          node-version: 20
+          node-version: ${{ matrix.node-version }}
+          cache: npm
       - name: Install dependencies
-        run: if [ -f package-lock.json ]; then npm ci; else npm install --no-package-lock; fi
+        run: npm ci
       - name: Test
         run: npm test
       - name: Security audit
-        run: npm audit --omit=dev --audit-level=high
+        run: npm audit --audit-level=moderate
       - name: Typecheck
-        run: npm run typecheck --if-present
+        run: npm run typecheck
       - name: Build
-        run: npm run build --if-present
-      - name: Inspect package contents
-        run: npm pack --dry-run
+        run: npm run build
+      - name: Validate packed artifact
+        run: |
+          mkdir -p "$RUNNER_TEMP/package-artifact" "$RUNNER_TEMP/package-consumer"
+          npm pack --pack-destination "$RUNNER_TEMP/package-artifact"
+          cd "$RUNNER_TEMP/package-consumer"
+          npm init -y
+          npm install "$RUNNER_TEMP/package-artifact"/*.tgz
+
+  # Vitest 5 needs Node 22+, so the minimum supported runtime gets a smoke test
+  # of the built package instead of the full suite.
+  node20-smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - run: npm pack --pack-destination "$RUNNER_TEMP/package-artifact"
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 20
+      - name: Install and load on Node 20
+        run: |
+          mkdir -p "$RUNNER_TEMP/package-consumer"
+          cd "$RUNNER_TEMP/package-consumer"
+          npm init -y
+          npm install "$RUNNER_TEMP/package-artifact"/*.tgz
+          name=$(node -p "require('$GITHUB_WORKSPACE/package.json').name")
+          node -e "const m = require('$name'); if (!Object.keys(m).length) process.exit(1)"
+          node --input-type=module -e "const m = await import('$name'); if (!Object.keys(m).length) process.exit(1)"

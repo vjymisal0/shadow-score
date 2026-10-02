@@ -19,8 +19,9 @@ jobs:
           ref: ${{ github.ref }}
       - uses: actions/setup-node@v5
         with:
-          node-version: 20
+          node-version: 24
           registry-url: https://registry.npmjs.org
+          cache: npm
       - name: Verify SemVer tag
         shell: bash
         run: |
@@ -30,13 +31,12 @@ jobs:
             echo "Tag v$tag_version does not match package.json version $package_version"
             exit 1
           }
-      - name: Install dependencies
-        run: if [ -f package-lock.json ]; then npm ci; else npm install --no-package-lock; fi
+      - run: npm ci
       - run: npm test
       - name: Security audit
-        run: npm audit --omit=dev --audit-level=high
-      - run: npm run typecheck --if-present
-      - run: npm run build --if-present
+        run: npm audit --audit-level=moderate
+      - run: npm run typecheck
+      - run: npm run build
       - name: Validate packed artifact
         run: |
           mkdir -p "$RUNNER_TEMP/package-artifact" "$RUNNER_TEMP/package-consumer"
