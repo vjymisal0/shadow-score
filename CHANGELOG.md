@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.1.1
+
+- Fixed TypeScript types for CommonJS consumers: `require` now resolves `dist/index.d.cts` instead of the ESM declarations ("masquerading as ESM" under `node16`/`nodenext`).
+- Exposed `./package.json` in the exports map.
+
 ## 1.1.0
 
 - Upgraded Sharp to 0.35.5.
